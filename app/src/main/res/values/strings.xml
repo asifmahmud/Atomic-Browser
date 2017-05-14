@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Atomic Browser</string>
+    <string name="go">Go</string>
+    <string name="forward_btn">Forward</string>
+    <string name="back_btn">Back</string>
+    <string name="clear_btn">Clear</string>
+    <string name="refresh_btn">Refresh</string>
+    <string name="home_btn">Home</string>
+
+</resources>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1.0"
+    tools:context="com.asif.atomicbrowser.MainActivity">
+
+    <LinearLayout
+        android:id="@+id/addres_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.10"
+        android:orientation="horizontal"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/edit_url"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.99"
+            android:hint="Search or Enter Address"
+            android:inputType="textWebEmailAddress"
+            android:singleLine="true"
+            android:textColor="#ffff"
+            android:textColorHint="#aeaeaf"
+            android:selectAllOnFocus="true"
+            android:visibility="visible" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/go_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.01"
+            android:background="#22A7F0"
+            android:text="@string/go"
+            android:textColor="#ffff" />
+
+    </LinearLayout>
+
+
+    <WebView
+        android:id="@+id/wv_brow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.80">
+
+    </WebView>
+
+    <LinearLayout
+        android:id="@+id/btn_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.10"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20"
+            android:background="#22A7F0"
+            android:text="@string/back_btn"
+            android:textColor="#d2d4d8" />
+
+        <Button
+            android:id="@+id/fwd_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20"
+            android:background="#22A7F0"
+            android:text="@string/forward_btn"
+            android:textColor="#d2d4d8" />
+
+        <Button
+            android:id="@+id/rfr_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20"
+            android:background="#22A7F0"
+            android:text="@string/refresh_btn"
+            android:textColor="#ffff" />
+
+        <Button
+            android:id="@+id/clr_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20"
+            android:background="#22A7F0"
+            android:text="@string/clear_btn"
+            android:textColor="#ffff" />
+
+        <Button
+            android:id="@+id/home_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20"
+            android:background="#22A7F0"
+            android:text="@string/home_btn"
+            android:textColor="#ffff" />
+
+    </LinearLayout>
+
+</LinearLayout>
