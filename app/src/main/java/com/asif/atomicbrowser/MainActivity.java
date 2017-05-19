@@ -3,11 +3,11 @@ package com.asif.atomicbrowser;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebChromeClient;
@@ -20,69 +20,37 @@ import android.widget.ProgressBar;
 
 public class MainActivity extends AppCompatActivity {
 
-    final Context context = this;
+    final   Context context = this;
     private WebView brow;
     private Button go, forward, back, refresh, clear, home;
     private EditText url_edit;
     private ProgressBar progress;
-
     private String homepage = "http://www.google.com";
+    private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.7F);
     private boolean isClearDisabled = false;
 
-    private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.7F);
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        brow = (WebView)findViewById(R.id.wv_brow); //Initiates web view
-        brow.setWebViewClient(new ourViewClient());
-        brow.getSettings().setJavaScriptEnabled(true); //Enabling JavaScript
-        brow.loadUrl(homepage); // Loading home page
 
+        brow = (WebView)findViewById(R.id.wv_brow); // Initiates web view
+        viewSettings(brow);                          // Settings to improve WebView performance
+        brow.loadUrl(homepage);                     // Loading home page
 
-        //Setting progress bar
-        brow.setWebChromeClient(new WebChromeClient(){
-            @Override
-            public void onProgressChanged(WebView view, int newProgress){
-                progress.setProgress(newProgress);
-                if (newProgress == 100)  progress.setVisibility(View.GONE);
-                else                     progress.setVisibility(View.VISIBLE);
-            }
-        });
-
-
-
-        brow.setWebViewClient(new WebViewClient(){
-            public void onPageFinished(WebView view, String url){
-                url_edit.setText(url);
-
-                if (brow.canGoBack())    enableButton(back);
-                else                     disableButton(back);
-
-                if (brow.canGoForward()) enableButton(forward);
-                else                     disableButton(forward);
-
-                if (isClearDisabled){
-                    enableButton(clear);
-                    isClearDisabled = false;
-                }
-
-                //Take focus away from url_edit at startup in order to hide keyboard
-                findViewById(R.id.addres_bar).requestFocus();
-
-            }
-        });
-
-
-
-        // Initiating progress bar
+        // Initiating progress spinner
         progress = (ProgressBar)findViewById(R.id.progress_bar);
+        initiateProgressSpinner(brow);
 
-        //Initiating Address Bar
+        // update buttons
+        buttonUpdate(brow);
+
+        // Initiating Address Bar
         url_edit = (EditText)findViewById(R.id.edit_url);
 
-        //Initiating buttons
+        // Initiating buttons
         go       = (Button)findViewById(R.id.go_btn);
         forward  = (Button)findViewById(R.id.fwd_btn);
         back     = (Button)findViewById(R.id.back_btn);
@@ -187,7 +155,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-
                 builder.create().show();
                 isClearDisabled = true;
 
@@ -215,4 +182,71 @@ public class MainActivity extends AppCompatActivity {
         button.setTextColor(Color.parseColor("#ffffff"));
     }
 
+    // Settings to improve web view performance
+    protected void viewSettings(WebView v){
+
+        @SuppressWarnings("deprecation")
+        WebSettings settings = v.getSettings();
+        settings.setJavaScriptEnabled(true); //Enabling JavaScript
+        settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        settings.setLoadWithOverviewMode(true);
+        settings.setUseWideViewPort(true);
+        settings.setSupportZoom(true);
+        settings.setBuiltInZoomControls(false);
+        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        settings.setDomStorageEnabled(true);
+        v.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+        v.setScrollbarFadingEnabled(true);
+
+        /*
+        if Android version is newer than Kitkat, set web view layer to hardware
+        */
+        if (Build.VERSION.SDK_INT >= 19)
+            brow.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        else
+            brow.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+    }
+
+    protected void initiateProgressSpinner(WebView v){
+        v.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onProgressChanged(WebView view, int newProgress){
+                progress.setProgress(newProgress);
+
+                if (newProgress == 100)
+                    progress.setVisibility(View.GONE);
+                else
+                    progress.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    // updating button visibility on page load
+    protected void buttonUpdate(final WebView v){
+        v.setWebViewClient(new WebViewClient(){
+            public void onPageFinished(WebView view, String url){
+                url_edit.setText(url);
+
+                if (v.canGoBack())
+                    enableButton(back);
+                else
+                    disableButton(back);
+
+                if (v.canGoForward())
+                    enableButton(forward);
+                else
+                    disableButton(forward);
+
+                if (isClearDisabled){
+                    enableButton(clear);
+                    isClearDisabled = false;
+                }
+
+                // Take focus away from url_edit at startup to hide keyboard
+                findViewById(R.id.addres_bar).requestFocus();
+
+            }
+        });
+    }
 }
