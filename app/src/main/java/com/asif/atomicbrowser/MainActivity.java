@@ -18,9 +18,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
+/* ================================================================== */
+
 public class MainActivity extends AppCompatActivity {
 
-    final   Context context = this;
+
     private WebView brow;
     private Button go, forward, back, refresh, clear, home;
     private EditText url_edit;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private String homepage = "http://www.google.com";
     private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.7F);
     private boolean isClearDisabled = false;
+    final   Context context = this;
 
 
     @SuppressWarnings("deprecation")
@@ -36,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        brow = (WebView)findViewById(R.id.wv_brow); // Initiates web view
+        brow = (WebView)findViewById(R.id.wv_brow);  // Initiates web view
         viewSettings(brow);                          // Settings to improve WebView performance
-        brow.loadUrl(homepage);                     // Loading home page
+        brow.loadUrl(homepage);                      // Loading home page
 
         // Initiating progress spinner
         progress = (ProgressBar)findViewById(R.id.progress_bar);
@@ -58,17 +61,22 @@ public class MainActivity extends AppCompatActivity {
         clear    = (Button)findViewById(R.id.clr_btn);
         home     = (Button)findViewById(R.id.home_btn);
 
-        goOnclickListener(go);
-        forwardOnclickListener(forward);
-        backOnclickListener(back);
-        refreshOnclickListener(refresh);
-        clearOnclickListener(clear);
-        homeOnclickListener(home);
+        goOnClickListener(go);
+        forwardOnClickListener(forward);
+        backOnClickListener(back);
+        refreshOnClickListener(refresh);
+        clearOnClickListener(clear);
+        homeOnClickListener(home);
 
     }
 
+
+
+    /* ================================================================== */
+
+
     //Onclick listener for the "Go" button
-    protected void goOnclickListener(Button go){
+    protected void goOnClickListener(Button go){
         go.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -92,8 +100,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+    /* ================================================================== */
+
     //Onclick listener for the "Forward" button
-    protected void forwardOnclickListener(final Button forward){
+    protected void forwardOnClickListener(final Button forward){
         forward.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -105,8 +116,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /* ================================================================== */
+
     //Onclick listener for the "Back" button
-    protected void backOnclickListener(final Button back){
+    protected void backOnClickListener(final Button back){
         back.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -118,8 +131,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /* ================================================================== */
+
     //Onclick listener for the "Refresh" button
-    protected void refreshOnclickListener(Button refresh){
+    protected void refreshOnClickListener(Button refresh){
         refresh.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -129,8 +144,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /* ================================================================== */
+
     //Onclick listener for the "Clear" button
-    protected void clearOnclickListener(final Button clear){
+    protected void clearOnClickListener(final Button clear){
         clear.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -162,8 +179,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+    /* ================================================================== */
+
+
     //Onclick listener for the "Home" button
-    protected void homeOnclickListener(final Button clear){
+    protected void homeOnClickListener(final Button clear){
         clear.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -174,6 +195,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /* ================================================================== */
+
     protected void disableButton(Button button){
         button.setTextColor(Color.parseColor("#d2d4d8"));
     }
@@ -181,6 +204,10 @@ public class MainActivity extends AppCompatActivity {
     protected void enableButton(Button button){
         button.setTextColor(Color.parseColor("#ffffff"));
     }
+
+
+    /* ================================================================== */
+
 
     // Settings to improve web view performance
     protected void viewSettings(WebView v){
@@ -208,6 +235,8 @@ public class MainActivity extends AppCompatActivity {
             brow.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
     }
 
+    /* ================================================================== */
+
     protected void initiateProgressSpinner(WebView v){
         v.setWebChromeClient(new WebChromeClient(){
             @Override
@@ -221,6 +250,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    /* ================================================================== */
+
 
     // updating button visibility on page load
     protected void buttonUpdate(final WebView v){
